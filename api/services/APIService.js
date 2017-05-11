@@ -29,16 +29,25 @@ var APIService = {
                 sensor: measure.id,
                 value: measure.current_value
             })
-            .exec( function (err, finn) {
-                if (err) { console.log( err) ;}
+            .exec( function (err, finn){
+                if (err) { console.log (err);}
                 console.log("Medida actualizada");
-                Sensor.update({id: measure.id}, {current_value: measure.current_value})
-                .exec(function (err, finn) {
-                    if (err) { console.log( err);}
-                    console.log("Sensor actualizado");
-                })
             })
         }
+    },
+
+    updateSensor: function updateSensor(options, done) {
+
+        console.log("Inicia servicio updateSensor");
+        for (i=0; i<options.measures.length; i++ ) {
+            var measure = options.measures[i];
+            Sensor.update({id: measure.id}, {current_value: measure.current_value})
+            .exec(function (err, finn) {
+                if(err) { console.log(err);}
+                console.log("Sensor actualizado");
+            })
+        }
+
     }
 
 };

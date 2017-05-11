@@ -9,11 +9,13 @@ module.exports = {
 
 	newMeasure: function(req, res) {
 
+
 		var dataFromDevice = req.params.all();
 		var createEvents;
 		var createMeasures;
 		var dataForMeasures;
 
+		//console.log(req);
 		console.log(dataFromDevice);
 
 		if (req.method == 'POST'){
@@ -37,10 +39,18 @@ module.exports = {
 				console.log("Error al crear medida");
 				console.log(err);
 			}
+			try {
+				var updatesensor = APIService.updateSensor(dataForMeasures);
+			}
+			catch (err) {
+				console.log("Error al actualizar sensor");
+				console.log(err);
+			}
 			res.send("OK");
 		}
 
 		else {
+			console.log("BAD REQUEST");
 			return res.badRequest();
 		}
 
